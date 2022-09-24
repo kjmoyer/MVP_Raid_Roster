@@ -12,7 +12,6 @@ function App() {
 
   let markActive = (e) => {
     setActive(e.target.id)
-    console.log('clicked');
   }
 
   return (
