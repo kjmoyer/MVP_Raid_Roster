@@ -10,25 +10,39 @@ function CharsList({ charsList, list, markActive, active}) {
 
   let select = (e) => {
     e.preventDefault();
-    console.log(typeof e.target.id);
-    markActive(chars[Number.parseInt(e.target.id)]);
+    markActive(chars[Number.parseInt(e.target.attributes[0].nodeValue)]);
   }
 
   return (
     <div>
-      <h3>{list}</h3>
-      <ListGroup>
+      <ListGroup style={{
+        overflowX: 'overflow',
+        overflowY: 'scroll',
+        height: '40%',
+        margin: '5px'
+      }}>
         {chars.map((char, index) => {
           let isActive = (active.name === char.name ? 'active' : null);
-          return <ListGroup.Item as='div' style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }} key={char.name} id={index} onClick={select} active={isActive}>
-            <img style={{ height: '20px', width: '20px' }} src={char.specicon}></img>
-            <div>
+          return <ListGroup.Item as='div' style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center'
+            }}
+            key={char.name} identifier={index} onClick={select} active={isActive}>
+            <img  identifier={index} style={{
+              height: '20px',
+              width: '20px',
+              marginRight: '5px',
+              }}
+              src={char.specicon}></img>
+            <div identifier={index}>
               {char.name}
             </div>
-            <div>
+            <div identifier={index}>
               {char.specname}
             </div>
-            <div>
+            <div identifier={index}>
               {char.class}
             </div>
           </ListGroup.Item>

@@ -15,8 +15,8 @@ function PickCharacter({ updateChars }) {
 
 
   useEffect(() => {
-    server.getGuildies('/chars', { guildMember: true })
-      .then(({data}) => {
+    server.get('/chars', { guildMember: true })
+      .then(({ data }) => {
         setGuildChars(data);
       })
       .catch((err) => {
@@ -25,7 +25,7 @@ function PickCharacter({ updateChars }) {
   }, [])
 
   useEffect(() => {
-    server.getGuildies('/chars', { guildMember: false })
+    server.get('/chars', { guildMember: false })
       .then((data) => {
         setNonGuildChars(data.data);
       })
@@ -58,7 +58,6 @@ function PickCharacter({ updateChars }) {
   }
 
   let markActive = (char) => {
-    console.log(char);
     setActive(char);
   }
 
@@ -70,12 +69,16 @@ function PickCharacter({ updateChars }) {
   return (
     <div>
       <NewChar show={showNewChar}></NewChar> {/* not yet working */}
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+      <div style={{display: 'flex', flexDirection: 'column'}}>
+
+      <h4>{listName}</h4>
+      <div style={{display: 'flex', justifyContent: 'space-around' }}>
         <Button variant='info' onClick={toggleList}>Swap List</Button>
         <Button variant='info' onClick={addChar}>Add New Char</Button>
       </div>
-      <CharsList charsList={listName === 'Guild Members' ? guildChars : nonGuildChars} list={listName} active={active} markActive={markActive}></CharsList>
+      <CharsList charsList={listName === 'Guild Members' ? guildChars : nonGuildChars} active={active} markActive={markActive}></CharsList>
       <Button variant='success' onClick={addToRoster}>Add to Raid Roster</Button>
+      </div>
     </div>
   )
 

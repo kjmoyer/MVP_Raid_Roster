@@ -1,112 +1,82 @@
 import { useState, useEffect } from 'react'
 import './App.css';
-import server from './serverRequests.js';
-import { Button, ListGroup } from 'react-bootstrap';
+import { Button, ListGroup, Row, Col, Container } from 'react-bootstrap';
 import PickCharacter from './pickCharacters/pickCharacter.jsx';
+import CurrentBuffs from './CurrentBuffs.jsx';
+import CurrentDebuffs from './CurrentDebuffs.jsx';
+import RaidGroup from './RaidGroup.jsx'
 
 function App() {
-
-  let [currentChars, setCurrentChars] = useState({})
+  let [currentChars, setCurrentChars] = useState({});
   let [currentBuffs, setCurrentBuffs] = useState([]);
+  let [currentDebuffs, setCurrentDebuffs] = useState([]);
 
+
+  useEffect(() => {
+    let newBuffs = [...currentBuffs];
+    let newDebuffs = [...currentDebuffs];
+    for (let char in currentChars) {
+      currentChars[char].buffs.forEach((buff) => {
+        if (currentBuffs.indexOf(buff) === -1) {
+          newBuffs.push(buff)
+        }
+      })
+      currentChars[char].debuffs.forEach((debuff) => {
+        if (currentDebuffs.indexOf(debuff) === -1) {
+          newDebuffs.push(debuff)
+        }
+      })
+      setCurrentBuffs(newBuffs);
+      setCurrentDebuffs(newDebuffs);
+    }
+  }, [currentChars])
 
   let updateChars = (char) => {
-    let newChars = currentChars;
+    if (Object.keys(currentChars).length === 25) {
+      console.log('Raid full!') //TODO: make this a modal pop up in the future
+      return;
+    }
+    let newChars = { ...currentChars }
     newChars[char.name] = char;
     setCurrentChars(newChars);
-    // setCurrentChars([...currentChars, char]) //write when you know how data will be passed
   }
 
 
   return (
     <div className="App">
-      <div className='row'>
-        <PickCharacter updateChars={updateChars}>
-        </PickCharacter>
-      </div>
-
+        <Row style={{maxHeight: '400px'}}>
+          <Col>
+            <PickCharacter updateChars={updateChars} />
+          </Col>
+          <Col>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'flex-start',
+              }}>
+              <CurrentBuffs currentBuffs={currentBuffs} />
+              <CurrentDebuffs currentDebuffs={currentDebuffs} />
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+          <RaidGroup groupChars={Object.values(currentChars).slice(0,5)}/>
+          </Col>
+          <Col>
+          <RaidGroup groupChars={Object.values(currentChars).slice(5,10)}/>
+          </Col>
+          <Col>
+          <RaidGroup groupChars={Object.values(currentChars).slice(10,15)}/>
+          </Col>
+          <Col>
+          <RaidGroup groupChars={Object.values(currentChars).slice(15,20)}/>
+          </Col>
+          <Col>
+          <RaidGroup groupChars={Object.values(currentChars).slice(20,25)}/>
+          </Col>
+        </Row>
     </div>
   )
-  // return (
-  //   <div className="App">
-  //     <div className='row'>
-  //       <div className='col'>
-  //         <ListGroup as='ul'>
-  //           {currentChars.map((char) => {
-  //             let isActive = (active === char.name ? 'active' : null);
-  //             return <ListGroup.Item as='li' key={char.name} id={char.name} action onClick={markActive} active={isActive}>{char.name + ' ' + char.spec + ' ' + char.class} </ListGroup.Item>
-  //           })}
-  //         </ListGroup>
-  //       </div>
-  //       <div className='col'>
-  //       </div>
-  //       <div className='col'>
-  //       </div>
-  //     </div>
-  //     <div className='row'>
-  //       <div className='col'>
-  //         <h5>Group 1</h5>
-  //         <ListGroup>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //         </ListGroup>
-  //       </div>
-  //       <div className='col'>
-  //         <h5>Group 2</h5>
-  //         <ListGroup>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //         </ListGroup>
-  //       </div>
-  //       <div className='col'>
-  //         <h5>Group 3</h5>
-  //         <ListGroup>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //         </ListGroup>
-  //       </div>
-  //       <div className='col'>
-  //         <h5>Group 4</h5>
-  //         <ListGroup>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //         </ListGroup>
-  //       </div>
-  //       <div className='col'>
-  //         <h5>Group 5</h5>
-  //         <ListGroup>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //           <div>{`<empty>`}</div>
-  //         </ListGroup>
-  //       </div>
-  //     </div>
-  //     {/* <div className="row">
-  //       <Button className="col" variant="primary">Primary</Button>{' '}
-  //       <Button className="col" variant="secondary">Secondary</Button>{' '}
-  //       <Button className="col" variant="success">Success</Button>{' '}
-  //       <Button className="col" variant="warning">Warning</Button>{' '}
-  //       <Button className="col" variant="danger">Danger</Button>{' '}
-  //       <Button className="col" variant="info">Info</Button>{' '}
-  //       <Button className="col" variant="light">Light</Button>{' '}
-  //       <Button className="col" variant="dark">Dark</Button> <Button variant="link">Link</Button>
-  //     </div> */}
-  //   </div>
-  // )
 }
 
 export default App
