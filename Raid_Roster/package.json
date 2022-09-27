@@ -10,10 +10,15 @@
     "createdb": "node ./Database/createDB.js"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "path": "^0.12.7",
     "pg": "^8.8.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.3.5",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
