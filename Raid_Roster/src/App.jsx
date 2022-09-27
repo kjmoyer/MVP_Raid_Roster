@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="App">
-        <Row style={{maxHeight: '400px'}}>
+        <Row style={{maxHeight: '550px'}}>
           <Col>
             <PickCharacter updateChars={updateChars} />
           </Col>

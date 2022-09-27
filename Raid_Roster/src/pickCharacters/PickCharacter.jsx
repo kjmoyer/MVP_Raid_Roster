@@ -33,24 +33,21 @@ function PickCharacter({ updateChars }) {
         console.log(err);
       })
   }, [])
-  useEffect(() => {
-    if (listName === 'guild') {
-      setShowNewChar(guildChars);
-    } else {
-      setShowNewChar(nonGuildChars)
-    }
-  }, [guildChars, nonGuildChars])
 
-  let addChar = (e) => {
-    e.preventDefault();
-    setShowNewChar(true);
+
+  let toggleModal = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    let newBool = !showNewChar;
+    setShowNewChar(newBool);
   }
 
   let toggleList = (e) => {
     e.preventDefault();
     if (JSON.stringify(charsList) === JSON.stringify(guildChars)) {
       setCharsList(nonGuildChars);
-      setListName('Non Guild Members')
+      setListName('Non-Guild Members')
     } else {
       setCharsList(guildChars);
       setListName('Guild Members')
@@ -68,13 +65,13 @@ function PickCharacter({ updateChars }) {
 
   return (
     <div>
-      <NewChar show={showNewChar}></NewChar> {/* not yet working */}
+      <NewChar show={showNewChar} toggleModal={toggleModal}></NewChar>
       <div style={{display: 'flex', flexDirection: 'column'}}>
 
       <h4>{listName}</h4>
       <div style={{display: 'flex', justifyContent: 'space-around' }}>
         <Button variant='info' onClick={toggleList}>Swap List</Button>
-        <Button variant='info' onClick={addChar}>Add New Char</Button>
+        <Button variant='info' onClick={toggleModal}>Add New Char</Button>
       </div>
       <CharsList charsList={listName === 'Guild Members' ? guildChars : nonGuildChars} active={active} markActive={markActive}></CharsList>
       <Button variant='success' onClick={addToRoster}>Add to Raid Roster</Button>
