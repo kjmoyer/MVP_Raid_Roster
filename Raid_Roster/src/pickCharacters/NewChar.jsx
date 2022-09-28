@@ -4,7 +4,7 @@ import server from '../serverRequests.js';
 
 
 
-function NewChar({ show, toggleModal }) {
+function NewChar({ show, toggleModal, addNewCharToList }) {
 
   let [showModal, setShowModal] = useState(false);
   let [specs, setSpecs] = useState([])
@@ -33,7 +33,6 @@ function NewChar({ show, toggleModal }) {
     let formSpec = formElements[2].value;
     let formSecondarySpec = formElements[3].value
     let guildie = formElements[4].checked ? false : true;
-    console.log(formName, formClass, formSpec, formSecondarySpec, guildie)
     server.post('/char',
       {
         name: formName,
@@ -43,6 +42,14 @@ function NewChar({ show, toggleModal }) {
         guildmember: guildie
       }
     )
+    .then(() => {
+      return server.get('/char', {name: formName})
+    })
+    .then(({ data }) => {
+      console.log(data);
+      addNewCharToList(data[0]);
+      toggleModal();
+    })
     .catch((err) => {
       console.log(err);
     })

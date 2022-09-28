@@ -41,38 +41,48 @@ function App() {
     setCurrentChars(newChars);
   }
 
+  let removeChar = (e) => {
+    let char = e.target.parentElement.children[1].innerHTML;
+    let newChars = { ...currentChars }
+    delete newChars[char]
+    setCurrentChars(newChars);
+  }
+
 
   return (
     <div className="App">
+      <Container fluid>
         <Row style={{maxHeight: '550px'}}>
           <Col>
-            <PickCharacter updateChars={updateChars} />
+            <PickCharacter updateChars={updateChars} current={currentChars}/>
           </Col>
-          <Col>
+          <Col >
             <div style={{
               display: 'flex',
               flexDirection: 'flex-start',
+              justifyContent: 'space-between'
               }}>
               <CurrentBuffs currentBuffs={currentBuffs} />
               <CurrentDebuffs currentDebuffs={currentDebuffs} />
             </div>
           </Col>
         </Row>
-        <Row>
+        </Container>
+        <Row style={{marginTop: '20px'}}>
           <Col>
-          <RaidGroup groupChars={Object.values(currentChars).slice(0,5)}/>
+          <RaidGroup groupChars={Object.values(currentChars).slice(0,5)} removeChar={removeChar}/>
           </Col>
           <Col>
-          <RaidGroup groupChars={Object.values(currentChars).slice(5,10)}/>
+          <RaidGroup groupChars={Object.values(currentChars).slice(5,10)} removeChar={removeChar}/>
           </Col>
           <Col>
-          <RaidGroup groupChars={Object.values(currentChars).slice(10,15)}/>
+          <RaidGroup groupChars={Object.values(currentChars).slice(10,15)} removeChar={removeChar}/>
           </Col>
           <Col>
-          <RaidGroup groupChars={Object.values(currentChars).slice(15,20)}/>
+          <RaidGroup groupChars={Object.values(currentChars).slice(15,20)} removeChar={removeChar}/>
           </Col>
           <Col>
-          <RaidGroup groupChars={Object.values(currentChars).slice(20,25)}/>
+          <RaidGroup groupChars={Object.values(currentChars).slice(20,25)} removeChar={removeChar}/>
           </Col>
         </Row>
     </div>

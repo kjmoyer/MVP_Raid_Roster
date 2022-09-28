@@ -26,5 +26,4 @@ dist-ssr
 # Other
 Raid_Roster/node_modules/
 node_modules/
-..node_modules/
 .env

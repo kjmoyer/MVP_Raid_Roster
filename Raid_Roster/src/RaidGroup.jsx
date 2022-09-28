@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { ListGroup } from 'react-bootstrap'
+import cross from './assets/cross.png';
 
 
-function RaidGroup({ groupChars }) {
+
+function RaidGroup({ groupChars, removeChar }) {
 
   let [raiders, setRaiders] = useState([])
 
@@ -24,6 +26,7 @@ function RaidGroup({ groupChars }) {
     }}>
       <ListGroup>
         {raiders.map((raider, index) => {
+          let img = raider.name === '<Empty>' ? <img></img> : <img style={{ height: '15px', width: '15px', cursor: 'pointer' }} src={cross} onClick={removeChar}></img>
           return <ListGroup.Item as='div' style={{
             display: 'flex',
             flexDirection: 'row',
@@ -37,9 +40,11 @@ function RaidGroup({ groupChars }) {
               marginRight: '5px'
               }}
               src={raider.specicon}></img>
-            <div>
+            <div style={{width: '100px'}}>
               {raider.name}
             </div>
+            {img}
+
           </ListGroup.Item>
         })}
       </ListGroup>

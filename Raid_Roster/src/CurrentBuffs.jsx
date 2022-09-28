@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
-import { ListGroup } from 'react-bootstrap'
+import { ListGroup, OverlayTrigger } from 'react-bootstrap'
 import server from './serverRequests.js';
 import checkmark from './assets/checkmark.png';
 import cross from './assets/cross.png';
+import HoverDisplay from './HoverDisplay.jsx';
+import BuffItem from './BuffItem.jsx'
 
 
 function CurrentBuffs({ currentBuffs }) {
@@ -29,29 +31,20 @@ function CurrentBuffs({ currentBuffs }) {
   })
 
   return (
-    <div >
+    <div style={{width: '50%'}}>
       <h4>Buffs</h4>
-      <ListGroup variant='flush' style={{
+      <ListGroup style={{
         overflowX: 'overflow',
         overflowY: 'scroll',
-        maxHeight: '40%',
-        borderBottom: '2px solid blue',
-        borderTop: '2px solid blue',
-        borderLeft: '2px solid blue',
+        height: '450px',
       }}>
         {buffs.map((buff, index) => {
           let icon = activeBuffs.indexOf(buff.buffid) !== -1 ? checkmark : cross;
-          return <ListGroup.Item as='div' style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            alignItems: '',
-            fontSize: '11px'
-          }}
-          key={buff.buffid}>
-            <img style={{ height: '15px', width: '15px' }} src={icon} />
-            <div>{buff.effect}</div>
-          </ListGroup.Item>
+          return (
+              <ListGroup.Item as='li' key={buff.buffid}>
+                <BuffItem buffType='buffs' buff={buff} icon={icon}/>
+              </ListGroup.Item>
+          )
         })}
       </ListGroup>
     </div>
