@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css';
 import { Button, ListGroup, Row, Col, Container } from 'react-bootstrap';
-import PickCharacter from './pickCharacters/pickCharacter.jsx';
+import PickCharacter from './pickCharacters/PickCharacter.jsx';
 import CurrentBuffs from './CurrentBuffs.jsx';
 import CurrentDebuffs from './CurrentDebuffs.jsx';
 import RaidGroup from './RaidGroup.jsx'
