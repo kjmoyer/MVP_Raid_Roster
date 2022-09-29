@@ -20,7 +20,7 @@ function CharsList({ charsList, current, list, markActive, active, toggleOS }) {
     <div style={{
       overflowX: 'overflow',
       overflowY: 'scroll',
-      height: '350px',
+      height: '315px',
       margin: '5px'
     }}>
       <ListGroup >

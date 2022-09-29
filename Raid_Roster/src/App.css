@@ -3,6 +3,11 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2cd0f318-4f42-4491-b25a-2c8064ce24fa/d64cmli-3f993dbd-df16-4e91-888b-6be5a67ce2d7.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJjZDBmMzE4LTRmNDItNDQ5MS1iMjVhLTJjODA2NGNlMjRmYVwvZDY0Y21saS0zZjk5M2RiZC1kZjE2LTRlOTEtODg4Yi02YmU1YTY3Y2UyZDcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.XeKTHVy4xkzQLksjfkZScjiliMhcMRJJlT1w1elXAVw') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .logo {
@@ -10,9 +15,11 @@
   padding: 1.5em;
   will-change: filter;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +29,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -39,4 +47,31 @@
 
 .read-the-docs {
   color: #888;
+}
+
+div {
+  color: white
+}
+
+.header {
+  color: rgba(252, 186,3);
+  font-weight: bold;
+}
+
+.header_row {
+    color: 'white';
+}
+
+div .list-group-item {
+  background-color: rgba(66, 66, 66, 0.7)
+}
+
+button .btn-sucess {
+  background-color: rgba(66, 66, 66, 0.7)
+}
+button {
+  background-color: rgba(36,62,125, 0.95);
+  color: white;
+  border-radius: 10px;
+  padding: 5px
 }

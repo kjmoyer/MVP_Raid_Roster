@@ -3,7 +3,6 @@ import { ListGroup, OverlayTrigger } from 'react-bootstrap'
 import server from './serverRequests.js';
 import checkmark from './assets/checkmark.png';
 import cross from './assets/cross.png';
-import HoverDisplay from './HoverDisplay.jsx';
 import BuffItem from './BuffItem.jsx'
 
 
@@ -32,7 +31,7 @@ function CurrentBuffs({ currentBuffs }) {
 
   return (
     <div style={{width: '50%'}}>
-      <h4>Buffs</h4>
+      <h1 className={'header'}>Buffs</h1>
       <ListGroup style={{
         overflowX: 'overflow',
         overflowY: 'scroll',

@@ -56,7 +56,7 @@ function App() {
           <Col>
             <PickCharacter updateChars={updateChars} current={currentChars}/>
           </Col>
-          <Col >
+          <Col>
             <div style={{
               display: 'flex',
               flexDirection: 'flex-start',

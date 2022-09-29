@@ -3,7 +3,6 @@ import { Button, Modal } from 'react-bootstrap';
 import server from '../serverRequests.js';
 import NewChar from './NewChar.jsx';
 import CharsList from './CharsList.jsx';
-import styles from '../styled.js'
 
 function PickCharacter({ updateChars, current }) {
   let [guildChars, setGuildChars] = useState([]);
@@ -109,19 +108,20 @@ function PickCharacter({ updateChars, current }) {
       <NewChar show={showNewChar} toggleModal={toggleModal} addNewCharToList={addNewCharToList}></NewChar>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
 
-        <h4>{listName}</h4>
+        <h1 className={'header'}>{listName}</h1>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Button variant='success' onClick={toggleList}>Swap List</Button>
-          <Button variant='success' onClick={toggleModal}>Add New Char</Button>
+          <button onClick={toggleList}>Swap List</button>
+          <button onClick={toggleModal}>Add New Char</button>
         </div>
-        <div style={{
-          backgroundColor: 'green',
+        <div className={'header_row'} style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
           color: 'white',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-around',
           alignItems: 'center',
-          margin: '5px'
+          margin: '5px',
+          borderRadius: '5px'
         }}>
           <div style={{ width: '10px' }}>Icon</div>
           <div style={{ width: '100px' }}>Name</div>
@@ -130,7 +130,7 @@ function PickCharacter({ updateChars, current }) {
           <div style={{ width: '50px', marginRight: '10px' }}>Toggle Offspec</div>
         </div>
         <CharsList charsList={listName === 'Guild Members' ? guildChars : nonGuildChars} current={currentChars} active={active} list={listName} markActive={markActive} toggleOS={toggleOS}></CharsList>
-        <Button variant='success' onClick={addToRoster}>Add to Raid Roster</Button>
+        <button onClick={addToRoster}>Add to Raid Roster</button>
       </div>
     </div>
   )
