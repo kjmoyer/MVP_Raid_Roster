@@ -3,7 +3,9 @@
 Overview:
 This raid roster application for World of Warcraft: Wrath of the Lich King allows a user to create users, add them to Guild Member and Non-Guild Member lists, add these characters to a raid roster of up to 25 characters, and keep track of what buffs and debuffs these specs will provide to the raid.
 
-Navigation:
+```diff
+!Navigation:
+```
 Add New Character Button: brings up a modal form to enter new character information to be added to the database and character lists.
 
 Swap List: Swaps the currently shown list between 'Guild Members' and 'Non-Guild Members'.
@@ -19,6 +21,7 @@ Click 'X' on current character: removes that character from the raid roster, and
 Buffs/Debuffs columns: displays current buffs / debuffs provided to the raid based on raid composition with check marks or crosses.
 
 Hover single buff/debuff: A tooltip displays which classes provide the highlighted buff or debuff to make filling missing values easy.
+
 
 
 Planned improvements:
