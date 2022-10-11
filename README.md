@@ -33,3 +33,5 @@ Add other cooldowns by the buff/debuff section with count (such as innervate, an
 Add a component listing the # of tanks, healers, ranged DPS, and melee dps chars in Raid.
 
 Update tooltip for active buffs: changes from what classes could provide this to what chars are currently providing this.
+
+![Alt Text](<iframe src="https://giphy.com/embed/p7Hgtn7wdo3EKb53xx" width="480" height="304" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/p7Hgtn7wdo3EKb53xx">via GIPHY</a></p>)
