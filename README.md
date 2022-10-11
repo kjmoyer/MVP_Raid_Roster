@@ -34,4 +34,4 @@ Add a component listing the # of tanks, healers, ranged DPS, and melee dps chars
 
 Update tooltip for active buffs: changes from what classes could provide this to what chars are currently providing this.
 
-![Alt Text](https://giphy.com/embed/p7Hgtn7wdo3EKb53xx" width="480" height="304" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/p7Hgtn7wdo3EKb53xx)
+![Alt Text](https://giphy.com/embed/p7Hgtn7wdo3EKb53xx)
