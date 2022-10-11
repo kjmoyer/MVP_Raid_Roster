@@ -1,10 +1,11 @@
 # MVP_Raid_Roster
-
-Overview:
+```diff
+-Overview:
+```
 This raid roster application for World of Warcraft: Wrath of the Lich King allows a user to create users, add them to Guild Member and Non-Guild Member lists, add these characters to a raid roster of up to 25 characters, and keep track of what buffs and debuffs these specs will provide to the raid.
 
 ```diff
-Navigation:
+-Navigation:
 ```
 Add New Character Button: brings up a modal form to enter new character information to be added to the database and character lists.
 
@@ -23,8 +24,9 @@ Buffs/Debuffs columns: displays current buffs / debuffs provided to the raid bas
 Hover single buff/debuff: A tooltip displays which classes provide the highlighted buff or debuff to make filling missing values easy.
 
 
-
-Planned improvements:
+```diff
+-Planned improvements:
+```
 Optimize for mobile by making sure that the buffs/debuffs do not overlap the raid roster components when the screen size is reduced.
 
 Edit/Delete Char buttons: edit information or delete character altogether from a list/database.
