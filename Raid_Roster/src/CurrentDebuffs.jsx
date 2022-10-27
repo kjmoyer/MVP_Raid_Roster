@@ -22,10 +22,8 @@ function CurrentDebuffs({ currentDebuffs }) {
   }, [])
 
   useEffect(() => {
-    if (currentDebuffs.length > 0) {
-      setActiveDebuffs(currentDebuffs);
-    }
-  })
+    setActiveDebuffs(currentDebuffs);
+  }, [currentDebuffs])
 
   return (
     <div style={{ width: '50%' }}>
@@ -38,9 +36,9 @@ function CurrentDebuffs({ currentDebuffs }) {
         {debuffs.map((debuff) => {
           let icon = activeDebuffs.indexOf(debuff.buffid) !== -1 ? checkmark : cross;
           return (
-              <ListGroup.Item as='li' key={debuff.buffid}>
-                <BuffItem buffType='debuffs' buff={debuff} icon={icon}/>
-              </ListGroup.Item>
+            <ListGroup.Item as='li' key={debuff.buffid}>
+              <BuffItem buffType='debuffs' buff={debuff} icon={icon} />
+            </ListGroup.Item>
           )
         })}
       </ListGroup>

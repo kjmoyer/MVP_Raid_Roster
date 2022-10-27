@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import server from '../serverRequests.js';
 import NewChar from './NewChar.jsx';
+import ConfirmDelete from './ConfirmDelete.jsx';
 import CharsList from './CharsList.jsx';
 
 function PickCharacter({ updateChars, current }) {
@@ -12,6 +13,7 @@ function PickCharacter({ updateChars, current }) {
   let [showNewChar, setShowNewChar] = useState(false);
   let [listName, setListName] = useState('Guild Members');
   let [active, setActive] = useState({});
+  let [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function PickCharacter({ updateChars, current }) {
     if (current) {
       setCurrentChars(current);
     }
-  },[current])
+  }, [current])
 
 
   let toggleModal = (e) => {
@@ -67,6 +69,33 @@ function PickCharacter({ updateChars, current }) {
   let addToRoster = (e) => {
     e.preventDefault();
     updateChars(active);
+  }
+
+  let confirmDelete = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    let newBool = !showConfirmDelete;
+    setShowConfirmDelete(newBool);
+  }
+
+  let deleteChar = (e) => {
+    e.preventDefault();
+    let thisChar = { ...active };
+    server.delete('/char', thisChar.name)
+      .then(() => {
+        confirmDelete();
+      })
+      .then(() => {
+        let updateChars = thisChar.guildmember ? guildChars : nonGuildChars;
+        const index = updateChars.indexOf(thisChar);
+        updateChars.splice(index, 1);
+        if (thisChar.guildmember) {
+          setGuildChars(updateChars);
+        } else {
+          setNonGuildChars(updateChars);
+        }
+      })
   }
 
   let addNewCharToList = (char) => {
@@ -106,6 +135,7 @@ function PickCharacter({ updateChars, current }) {
   return (
     <div>
       <NewChar show={showNewChar} toggleModal={toggleModal} addNewCharToList={addNewCharToList}></NewChar>
+      <ConfirmDelete show={showConfirmDelete} toggle={confirmDelete} active={active} deleteChar={deleteChar} />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
 
         <h1 className={'header'}>{listName}</h1>
@@ -130,6 +160,10 @@ function PickCharacter({ updateChars, current }) {
           <div style={{ width: '50px', marginRight: '10px' }}>Toggle Offspec</div>
         </div>
         <CharsList charsList={listName === 'Guild Members' ? guildChars : nonGuildChars} current={currentChars} active={active} list={listName} markActive={markActive} toggleOS={toggleOS}></CharsList>
+        <div className='modifyChar'>
+          <button className='edit'>Edit Char</button>
+          <button className='delete' onClick={confirmDelete}>Delete Char</button>
+        </div>
         <button onClick={addToRoster}>Add to Raid Roster</button>
       </div>
     </div>

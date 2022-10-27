@@ -24,13 +24,11 @@ function CurrentBuffs({ currentBuffs }) {
   }, [])
 
   useEffect(() => {
-    if (currentBuffs.length > 0) {
-      setActiveBuffs(currentBuffs);
-    }
-  })
+    setActiveBuffs(currentBuffs);
+  }, [currentBuffs])
 
   return (
-    <div style={{width: '50%'}}>
+    <div style={{ width: '50%' }}>
       <h1 className={'header'}>Buffs</h1>
       <ListGroup style={{
         overflowX: 'overflow',
@@ -40,9 +38,9 @@ function CurrentBuffs({ currentBuffs }) {
         {buffs.map((buff, index) => {
           let icon = activeBuffs.indexOf(buff.buffid) !== -1 ? checkmark : cross;
           return (
-              <ListGroup.Item as='li' key={buff.buffid}>
-                <BuffItem buffType='buffs' buff={buff} icon={icon}/>
-              </ListGroup.Item>
+            <ListGroup.Item as='li' key={buff.buffid}>
+              <BuffItem buffType='buffs' buff={buff} icon={icon} />
+            </ListGroup.Item>
           )
         })}
       </ListGroup>

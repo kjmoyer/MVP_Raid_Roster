@@ -59,7 +59,7 @@ function NewChar({ show, toggleModal, addNewCharToList }) {
   return (
     <Modal show={showModal} onHide={toggleModal}>
       <Modal.Header closeButton>
-        <Modal.Title>Add New Character</Modal.Title>
+        <Modal.Title style={{color: 'rgba(252, 186,3)'}}>Add New Character</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={(e) => { submitChar(e) }}>
@@ -103,7 +103,7 @@ function NewChar({ show, toggleModal, addNewCharToList }) {
           </Form.Group>
           <Form.Group>
             <div className='mb-3'>
-              <Form.Check type='checkbox' id='default-checkbox' label='Non-Guild Member'></Form.Check>
+              <Form.Check type='checkbox' id='default-checkbox' style={{color: 'rgba(252, 186, 3)'}} label='Non-Guild Member'></Form.Check>
             </div>
           </Form.Group>
         </Form>
