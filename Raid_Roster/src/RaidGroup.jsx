@@ -44,7 +44,6 @@ function RaidGroup({ groupChars, removeChar }) {
               {raider.name}
             </div>
             {img}
-
           </ListGroup.Item>
         })}
       </ListGroup>

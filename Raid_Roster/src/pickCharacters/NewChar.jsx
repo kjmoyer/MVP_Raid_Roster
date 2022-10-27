@@ -4,10 +4,11 @@ import server from '../serverRequests.js';
 
 
 
-function NewChar({ show, toggleModal, addNewCharToList }) {
+function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, removeFromCurrent}) {
 
   let [showModal, setShowModal] = useState(false);
   let [specs, setSpecs] = useState([])
+  let [char, setChar] = useState(undefined);
 
   useEffect(() => {
     if (show !== undefined) {
@@ -15,8 +16,16 @@ function NewChar({ show, toggleModal, addNewCharToList }) {
     }
   }, [show])
 
-  let classSelect = (e) => {
-    server.get('/specs', { class: e.target.value })
+  useEffect(() => {
+    if (editChar) {
+      setChar(editChar);
+      classSelect(null, editChar.class);
+    }
+  }, [editChar])
+
+  let classSelect = (e, editClass) => {
+    const selectedClass = editClass || e.target.value;
+    server.get('/specs', { class: selectedClass })
       .then(({ data }) => {
         setSpecs(data);
       })
@@ -33,43 +42,72 @@ function NewChar({ show, toggleModal, addNewCharToList }) {
     let formSpec = formElements[2].value;
     let formSecondarySpec = formElements[3].value
     let guildie = formElements[4].checked ? false : true;
-    server.post('/char',
-      {
-        name: formName,
-        class: formClass,
-        specid: formSpec,
-        secondarySpecid: formSecondarySpec,
-        guildmember: guildie
-      }
-    )
-    .then(() => {
-      return server.get('/char', {name: formName})
-    })
-    .then(({ data }) => {
-      console.log(data);
-      addNewCharToList(data[0]);
-      toggleModal();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+
+    if (!char) {
+      server.post('/char',
+        {
+          name: formName,
+          class: formClass,
+          specid: formSpec,
+          secondarySpecid: formSecondarySpec,
+          guildmember: guildie
+        }
+      )
+        .then(() => {
+          return server.get('/char', { name: formName })
+        })
+        .then(({ data }) => {
+          addNewCharToList(data[0]);
+          toggleNewChar();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    } else {
+      server.put('/char',
+        {
+          name: formName,
+          class: formClass,
+          specid: formSpec,
+          secondarySpecid: formSecondarySpec,
+          guildmember: guildie
+        }
+      )
+        .then(() => {
+          return server.get('/char', {name: formName});
+        })
+        .then(({ data }) => {
+          removeFromCurrent(data[0]);
+          addNewCharToList(data[0]);
+          toggleNewChar();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }
+
+  let clearAndToggle = (e) => {
+    e.preventDefault();
+    setChar(undefined);
+    toggleNewChar();
   }
 
 
   return (
-    <Modal show={showModal} onHide={toggleModal}>
+    <Modal show={showModal} onHide={toggleNewChar}>
       <Modal.Header closeButton>
-        <Modal.Title style={{color: 'rgba(252, 186,3)'}}>Add New Character</Modal.Title>
+        <Modal.Title style={{ color: 'rgba(252, 186,3)' }}>Add New Character</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={(e) => { submitChar(e) }}>
           <Form.Group className='mb-3'>
             <Form.Label>Character Name</Form.Label>
-            <Form.Control type='text' />
+            <Form.Control type='text' defaultValue={char ? char.name : null}></Form.Control>
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label>Class</Form.Label>
-            <Form.Control as='select' onChange={classSelect}>
+            <Form.Control as='select' onChange={classSelect} defaultValue={char ? char.class : null}>
               <option>Select A Class</option>
               <option value='Death Knight'>Death Knight</option>
               <option value='Druid'>Druid</option>
@@ -85,8 +123,8 @@ function NewChar({ show, toggleModal, addNewCharToList }) {
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label>Spec</Form.Label>
-            <Form.Control as='select'>
-              <option>Select a Spec</option>
+            <Form.Control as='select' id={char ? 'form-edit-field' : 'non-edit'}>
+              {char ? <option>Update Spec</option> : <option>Select a Spec</option>}
               {specs.map((spec, index) => {
                 return <option key={index} value={specs[index].specid}>{specs[index].specname}</option>
               })}
@@ -94,8 +132,8 @@ function NewChar({ show, toggleModal, addNewCharToList }) {
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label>Secondary Spec</Form.Label>
-            <Form.Control as='select'>
-              <option>Select a Secondary Spec</option>
+            <Form.Control as='select' id={char ? 'form-edit-field' : 'non-edit'}>
+              {char ? <option>Update Secondary Spec</option> : <option>Select a Secondary Spec</option>}
               {specs.map((spec, index) => {
                 return <option key={index} value={specs[index].specid}>{specs[index].specname}</option>
               })}
@@ -103,13 +141,13 @@ function NewChar({ show, toggleModal, addNewCharToList }) {
           </Form.Group>
           <Form.Group>
             <div className='mb-3'>
-              <Form.Check type='checkbox' id='default-checkbox' style={{color: 'rgba(252, 186, 3)'}} label='Non-Guild Member'></Form.Check>
+              <Form.Check type='checkbox' id='default-checkbox' style={{ color: 'rgba(252, 186, 3)' }} label='Non-Guild Member' defaultChecked={listName === 'Guild Members' ? false : true}></Form.Check>
             </div>
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' type='button' onClick={toggleModal}>Close</Button>
+        <Button variant='secondary' type='button' onClick={clearAndToggle}>Close</Button>
         <Button variant="primary" type='submit' name='submit' onClick={submitChar}>Submit</Button>
       </Modal.Footer>
     </Modal>

@@ -12,6 +12,9 @@ const server = {
   },
   delete: (endpoint, params) => {
     return axios.delete(path + endpoint, {'params': params})
+  },
+  put: (endpoint, data) => {
+    return axios.put(path + endpoint, data)
   }
 };
 

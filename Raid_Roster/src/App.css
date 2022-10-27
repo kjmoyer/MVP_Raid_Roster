@@ -59,7 +59,14 @@ div {
 }
 
 .header_row {
-    color: 'white';
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  display: flex;
+  flex-Direction: row;
+  justify-Content: space-around;
+  align-items: center;
+  margin: 5px;
+  border-radius: '5px'
 }
 
 .modifyChar {
@@ -91,4 +98,8 @@ button.delete {
 }
 .form-label {
   color: rgba(252, 186, 3);
+}
+
+#form-edit-field {
+  color: red;
 }

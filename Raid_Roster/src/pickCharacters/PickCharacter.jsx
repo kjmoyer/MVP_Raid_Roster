@@ -13,6 +13,7 @@ function PickCharacter({ updateChars, current }) {
   let [showNewChar, setShowNewChar] = useState(false);
   let [listName, setListName] = useState('Guild Members');
   let [active, setActive] = useState({});
+  let [editChar, setEditChar] = useState(undefined);
   let [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
 
@@ -43,11 +44,21 @@ function PickCharacter({ updateChars, current }) {
   }, [current])
 
 
-  let toggleModal = (e) => {
+  let toggleNewChar = (e) => {
     if (e) {
       e.preventDefault();
     }
     let newBool = !showNewChar;
+    setShowNewChar(newBool);
+  }
+
+  let toggleEditChar = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    let newBool = !showNewChar;
+    setEditChar(editChar ? undefined : active);
+    setActive({});
     setShowNewChar(newBool);
   }
 
@@ -87,15 +98,19 @@ function PickCharacter({ updateChars, current }) {
         confirmDelete();
       })
       .then(() => {
-        let updateChars = thisChar.guildmember ? guildChars : nonGuildChars;
-        const index = updateChars.indexOf(thisChar);
-        updateChars.splice(index, 1);
-        if (thisChar.guildmember) {
-          setGuildChars(updateChars);
-        } else {
-          setNonGuildChars(updateChars);
-        }
+        removeFromCurrent(thisChar)
       })
+  }
+
+  let removeFromCurrent = (thisChar) => {
+    let updateChars = thisChar.guildmember ? guildChars : nonGuildChars;
+    const index = updateChars.indexOf(thisChar);
+    updateChars.splice(index, 1);
+    if (thisChar.guildmember) {
+      setGuildChars(updateChars);
+    } else {
+      setNonGuildChars(updateChars);
+    }
   }
 
   let addNewCharToList = (char) => {
@@ -134,25 +149,27 @@ function PickCharacter({ updateChars, current }) {
 
   return (
     <div>
-      <NewChar show={showNewChar} toggleModal={toggleModal} addNewCharToList={addNewCharToList}></NewChar>
-      <ConfirmDelete show={showConfirmDelete} toggle={confirmDelete} active={active} deleteChar={deleteChar} />
+      <NewChar
+        show={showNewChar}
+        toggleNewChar={editChar ? toggleEditChar : toggleNewChar}
+        addNewCharToList={addNewCharToList}
+        removeFromCurrent={removeFromCurrent}
+        editChar={editChar}
+        listName={listName}>
+      </NewChar>
+      <ConfirmDelete
+        show={showConfirmDelete}
+        toggle={confirmDelete}
+        active={active}
+        deleteChar={deleteChar}>
+      </ConfirmDelete>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-
         <h1 className={'header'}>{listName}</h1>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <button onClick={toggleList}>Swap List</button>
-          <button onClick={toggleModal}>Add New Char</button>
+          <button onClick={toggleNewChar}>Add New Char</button>
         </div>
-        <div className={'header_row'} style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          color: 'white',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          margin: '5px',
-          borderRadius: '5px'
-        }}>
+        <div className={'header_row'}>
           <div style={{ width: '10px' }}>Icon</div>
           <div style={{ width: '100px' }}>Name</div>
           <div tyle={{ width: '90px' }}>Spec</div>
@@ -161,7 +178,7 @@ function PickCharacter({ updateChars, current }) {
         </div>
         <CharsList charsList={listName === 'Guild Members' ? guildChars : nonGuildChars} current={currentChars} active={active} list={listName} markActive={markActive} toggleOS={toggleOS}></CharsList>
         <div className='modifyChar'>
-          <button className='edit'>Edit Char</button>
+          <button className='edit' onClick={toggleEditChar}>Edit Char</button>
           <button className='delete' onClick={confirmDelete}>Delete Char</button>
         </div>
         <button onClick={addToRoster}>Add to Raid Roster</button>
