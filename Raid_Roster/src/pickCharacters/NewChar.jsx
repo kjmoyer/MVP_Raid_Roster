@@ -103,7 +103,7 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
         <Form onSubmit={(e) => { submitChar(e) }}>
           <Form.Group className='mb-3'>
             <Form.Label>Character Name</Form.Label>
-            <Form.Control type='text' defaultValue={char ? char.name : null}></Form.Control>
+            <Form.Control type='text' defaultValue={char ? char.name : null} disabled={char ? true : false}></Form.Control>
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label>Class</Form.Label>
