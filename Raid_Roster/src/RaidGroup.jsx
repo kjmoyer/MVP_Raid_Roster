@@ -24,7 +24,7 @@ function RaidGroup({ groupChars, removeChar }) {
       alignItems: 'center',
       justifyContent: 'flex-start'
     }}>
-      <ListGroup>
+      <ListGroup className='raidGroup'>
         {raiders.map((raider, index) => {
           let img = raider.name === '<Empty>' ? <img></img> : <img style={{ height: '15px', width: '15px', cursor: 'pointer' }} src={cross} onClick={removeChar}></img>
           return <ListGroup.Item as='div' style={{

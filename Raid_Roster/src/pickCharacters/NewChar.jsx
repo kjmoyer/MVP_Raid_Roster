@@ -4,7 +4,7 @@ import server from '../serverRequests.js';
 
 
 
-function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, removeFromCurrent}) {
+function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, removeFromCurrent }) {
 
   let [showModal, setShowModal] = useState(false);
   let [specs, setSpecs] = useState([])
@@ -74,7 +74,7 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
         }
       )
         .then(() => {
-          return server.get('/char', {name: formName});
+          return server.get('/char', { name: formName });
         })
         .then(({ data }) => {
           removeFromCurrent(data[0]);
@@ -88,14 +88,16 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
   }
 
   let clearAndToggle = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     setChar(undefined);
     toggleNewChar();
   }
 
 
   return (
-    <Modal show={showModal} onHide={toggleNewChar}>
+    <Modal show={showModal} onHide={clearAndToggle}>
       <Modal.Header closeButton>
         <Modal.Title style={{ color: 'rgba(252, 186,3)' }}>Add New Character</Modal.Title>
       </Modal.Header>
