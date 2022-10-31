@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Modal, Button, Form } from 'react-bootstrap'
+import { useState, useEffect } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
 import server from '../serverRequests.js';
 
 
@@ -99,7 +99,7 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
   return (
     <Modal show={showModal} onHide={clearAndToggle}>
       <Modal.Header closeButton>
-        <Modal.Title style={{ color: 'rgba(252, 186,3)' }}>Add New Character</Modal.Title>
+        <Modal.Title className='header'>Add New Character</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={(e) => { submitChar(e) }}>
@@ -149,8 +149,8 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' type='button' onClick={clearAndToggle}>Close</Button>
-        <Button variant="primary" type='submit' name='submit' onClick={submitChar}>Submit</Button>
+          <Button variant="primary" type='submit' name='submit' onClick={submitChar}>Submit</Button>
+          <Button variant='secondary' type='button' onClick={clearAndToggle}>Close</Button>
       </Modal.Footer>
     </Modal>
   )

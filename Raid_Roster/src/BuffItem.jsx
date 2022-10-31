@@ -21,7 +21,7 @@ function BuffItem({ icon, buff, buffType }) {
     if (buff) {
       setThisBuff(buff)
     }
-  })
+  }, [])
 
   return (
     <div>
@@ -32,7 +32,7 @@ function BuffItem({ icon, buff, buffType }) {
           <Tooltip id='buffsTT'>
             <div><strong>Classes with this {buffType.substring(0, buffType.length - 1)}</strong>:</div>
             {classes.map((spec) => {
-              return <div key={spec.specname}>
+              return <div key={spec.specname + spec.classname}>
                 {spec.specname} {spec.classname}
               </div>
             })}

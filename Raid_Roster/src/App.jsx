@@ -1,15 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import './App.css';
 import { Button, ListGroup, Row, Col, Container } from 'react-bootstrap';
 import PickCharacter from './pickCharacters/PickCharacter.jsx';
 import CurrentBuffs from './CurrentBuffs.jsx';
 import CurrentDebuffs from './CurrentDebuffs.jsx';
-import RaidGroup from './RaidGroup.jsx'
+import RaidGroup from './RaidGroup.jsx';
+import SignIn from './SignIn.jsx';
 
 function App() {
-  let [currentChars, setCurrentChars] = useState({});
-  let [currentBuffs, setCurrentBuffs] = useState([]);
-  let [currentDebuffs, setCurrentDebuffs] = useState([]);
+  const [currentChars, setCurrentChars] = useState({});
+  const [currentBuffs, setCurrentBuffs] = useState([]);
+  const [currentDebuffs, setCurrentDebuffs] = useState([]);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [cookies, setCookies] = useCookies(['user']);
 
 
   useEffect(() => {
@@ -51,9 +55,20 @@ function App() {
     setCurrentChars(newChars);
   }
 
+  const toggleSignIn = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    setShowSignIn(!showSignIn);
+  }
+
 
   return (
     <div className="App">
+      <SignIn show={showSignIn} toggle={toggleSignIn}/>
+      <h5 className='sign_in' onClick={toggleSignIn}>
+        Sign In
+      </h5>
       <Container fluid>
         <Row >
           <Col>

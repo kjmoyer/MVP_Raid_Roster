@@ -4,6 +4,7 @@
     "bootstrap": "^5.2.1",
     "dotenv": "^16.0.2",
     "pg": "^8.8.0",
-    "react-bootstrap": "^2.5.0"
+    "react-bootstrap": "^2.5.0",
+    "react-cookie": "^4.1.1"
   }
 }
