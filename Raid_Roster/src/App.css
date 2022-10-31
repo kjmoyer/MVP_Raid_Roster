@@ -70,6 +70,18 @@ div {
   cursor: pointer;
 }
 
+.toggle_sign_in {
+  background-color: rgba(252, 186,3);
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.toggle_sign_in:hover {
+  background-color: rgb(125, 92, 3);
+  cursor: pointer;
+}
+
 .header_row {
   background-color: rgba(0, 0, 0, 0.7);
   color: white;

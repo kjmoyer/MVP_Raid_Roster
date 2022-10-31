@@ -65,7 +65,7 @@ function App() {
 
   return (
     <div className="App">
-      <SignIn show={showSignIn} toggle={toggleSignIn}/>
+      <SignIn show={showSignIn} toggle={toggleSignIn} setCookies={setCookies}/>
       <h5 className='sign_in' onClick={toggleSignIn}>
         Sign In
       </h5>
