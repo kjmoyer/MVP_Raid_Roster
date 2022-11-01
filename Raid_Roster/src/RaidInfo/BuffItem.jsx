@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
-import server from './serverRequests.js';
+import server from '../serverRequests.js';
 
 function BuffItem({ icon, buff, buffType }) {
 

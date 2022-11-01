@@ -55,7 +55,7 @@ div {
 .header {
   color: rgba(252, 186, 3);
   font-weight: bold;
-  background-color: rgba(66, 66, 66, 0.5);
+  /* background-color: rgba(66, 66, 66, 0.5); */
 }
 
 .nav {
@@ -157,4 +157,24 @@ button.delete {
 
 .raidGroup {
   margin-top: 5px;
+}
+
+.character_row {
+  height: 60px;
+  font-size: 18px;
+}
+.OSimg {
+    height: 45px;
+    width: 45px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.OSimg:hover {
+  background-color: rgba(252, 186, 3);
+  padding: 3px;
+}
+
+.modal {
+  margin: 80px;
 }

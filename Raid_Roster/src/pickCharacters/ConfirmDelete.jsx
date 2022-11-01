@@ -11,9 +11,9 @@ function ConfirmDelete({ show, toggle, active, deleteChar }) {
     }
   }, [show])
 
-  if (!active.name) {
+  if (!active) {
     return (
-      <Modal show={showModal} onHide={toggle}>
+      <Modal className='modal' show={showModal} onHide={toggle}>
         <Modal.Title style={{ color: 'rgba(252, 186,3)' }} >
           Invalid Click
         </Modal.Title>

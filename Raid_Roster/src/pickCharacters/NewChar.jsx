@@ -100,7 +100,7 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
 
 
   return (
-    <Modal show={showModal} onHide={clearAndToggle}>
+    <Modal className='modal' show={showModal} onHide={clearAndToggle}>
       <Modal.Header closeButton>
         <Modal.Title className='header'>Add New Character</Modal.Title>
       </Modal.Header>

@@ -3,10 +3,11 @@ import { useCookies } from 'react-cookie';
 import './App.css';
 import { Button, ListGroup, Row, Col, Container } from 'react-bootstrap';
 import PickCharacter from './pickCharacters/PickCharacter.jsx';
-import CurrentBuffs from './CurrentBuffs.jsx';
-import CurrentDebuffs from './CurrentDebuffs.jsx';
+import CurrentBuffs from './RaidInfo/CurrentBuffs.jsx';
+import CurrentDebuffs from './RaidInfo/CurrentDebuffs.jsx';
 import RaidGroup from './RaidGroup.jsx';
 import SignIn from './SignIn.jsx';
+import RaidStats from './RaidInfo/RaidStats.jsx';
 
 function App() {
   const [currentChars, setCurrentChars] = useState({});
@@ -14,6 +15,13 @@ function App() {
   const [currentDebuffs, setCurrentDebuffs] = useState([]);
   const [showSignIn, setShowSignIn] = useState(false);
   const [cookies, setCookies, removeCookie] = useCookies(['guildid']);
+  const [raidStats, setRaidStats] = useState({
+    tanks: ['Endaron'],
+    healers: ['Grompler'],
+    ranged: ['Marzgirl'],
+    melee: ['Aquashazam'],
+    interrupts: ['Deadassassin']
+  })
 
 
   useEffect(() => {
@@ -75,11 +83,11 @@ function App() {
         setCookies={setCookies} />
       <Container fluid='true'>
         <Row className='nav'>
-          <Col fluid xs={10}>
+          <Col fluid='true' xs={10}>
           <h3 className='nav_header'>WRATH OF THE LICH KING RAID PLANNER</h3>
           <h4 className='nav_header'>Register your guild or sign in to start planning!</h4>
           </Col>
-          <Col fluid>
+          <Col fluid='true'>
             <h5 className='sign_in' onClick={cookies.guildid === undefined || cookies.guildid === 'undefined' ? toggleSignIn : signout}>
               {cookies.guildid === undefined || cookies.guildid === 'undefined' ? 'Sign In' : 'Sign Out'}
             </h5>
@@ -88,7 +96,7 @@ function App() {
       </Container>
       <Container fluid='true' className='top_row'>
         <Row >
-          <Col>
+          <Col lg={5}>
             <PickCharacter updateChars={updateChars}
               current={currentChars}
               cookies={cookies}
@@ -102,11 +110,12 @@ function App() {
             }}>
               <CurrentBuffs currentBuffs={currentBuffs} />
               <CurrentDebuffs currentDebuffs={currentDebuffs} />
+              <RaidStats raidStats={raidStats}/>
             </div>
           </Col>
         </Row>
       </Container>
-      <Container fluid style={{ marginTop: '20px' }}>
+      <Container fluid='true' style={{ marginTop: '20px' }}>
         <Row>
           <Col>
             <RaidGroup groupChars={Object.values(currentChars).slice(0, 5)} removeChar={removeChar} />

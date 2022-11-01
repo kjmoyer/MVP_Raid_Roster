@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { ListGroup, OverlayTrigger } from 'react-bootstrap'
-import server from './serverRequests.js';
-import checkmark from './assets/checkmark.png';
-import cross from './assets/cross.png';
+import server from '../serverRequests.js';
+import checkmark from '../assets/checkmark.png';
+import cross from '../assets/cross.png';
 import BuffItem from './BuffItem.jsx'
 
 
@@ -28,12 +28,12 @@ function CurrentBuffs({ currentBuffs }) {
   }, [currentBuffs])
 
   return (
-    <div style={{ width: '50%' }}>
-      <h1 className={'header'}>Buffs</h1>
+    <div style={{ width: '33%' }}>
+      <h1 className='header'>Buffs</h1>
       <ListGroup style={{
         overflowX: 'overflow',
         overflowY: 'scroll',
-        height: '450px',
+        height: '500px',
       }}>
         {buffs.map((buff, index) => {
           let icon = activeBuffs.indexOf(buff.buffid) !== -1 ? checkmark : cross;

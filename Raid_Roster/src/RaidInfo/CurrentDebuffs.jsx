@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { ListGroup, OverlayTrigger } from 'react-bootstrap'
-import server from './serverRequests.js';
-import checkmark from './assets/checkmark.png';
-import cross from './assets/cross.png';
+import { ListGroup} from 'react-bootstrap'
+import server from '../serverRequests.js';
+import checkmark from '../assets/checkmark.png';
+import cross from '../assets/cross.png';
 import BuffItem from './BuffItem.jsx'
 
 function CurrentDebuffs({ currentDebuffs }) {
@@ -26,12 +26,12 @@ function CurrentDebuffs({ currentDebuffs }) {
   }, [currentDebuffs])
 
   return (
-    <div style={{ width: '50%' }}>
+    <div style={{ width: '33%' }}>
       <h1 className={'header'}>Debuffs</h1>
       <ListGroup style={{
         overflowX: 'overflow',
         overflowY: 'scroll',
-        height: '450px',
+        height: '500px',
       }}>
         {debuffs.map((debuff) => {
           let icon = activeDebuffs.indexOf(debuff.buffid) !== -1 ? checkmark : cross;
