@@ -2,6 +2,10 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-family: "LifeCraft";
+  src: url('../fonts/LifeCraft_Font.ttf');
+  font-weight: normal;
+  font-style: normal;
   background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2cd0f318-4f42-4491-b25a-2c8064ce24fa/d64cmli-3f993dbd-df16-4e91-888b-6be5a67ce2d7.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJjZDBmMzE4LTRmNDItNDQ5MS1iMjVhLTJjODA2NGNlMjRmYVwvZDY0Y21saS0zZjk5M2RiZC1kZjE2LTRlOTEtODg4Yi02YmU1YTY3Y2UyZDcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.XeKTHVy4xkzQLksjfkZScjiliMhcMRJJlT1w1elXAVw') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -44,25 +48,44 @@
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
-}
-
 div {
   color: white
 }
 
 .header {
-  color: rgba(252, 186,3);
+  color: rgba(252, 186, 3);
+  font-weight: bold;
+  background-color: rgba(66, 66, 66, 0.5);
+}
+
+.nav {
+  background-color: rgba(36, 62, 125);
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10%;
+}
+
+.nav_header {
+  color: rgba(252, 186, 3);
   font-weight: bold;
 }
 
+.top_row {
+  margin-top: 70px;
+}
+
 .sign_in {
-  float: right;
-  background-color: rgba(252, 186,3);
+  background-color: rgba(252, 186, 3);
   color: white;
   padding: 8px;
   border-radius: 5px;
+  margin-right: 10px;
 }
 
 .sign_in:hover {
@@ -71,7 +94,7 @@ div {
 }
 
 .toggle_sign_in {
-  background-color: rgba(252, 186,3);
+  background-color: rgba(252, 186, 3);
   color: white;
   padding: 8px;
   border-radius: 5px;
@@ -106,15 +129,16 @@ div .list-group-item {
 button .btn-success {
   background-color: rgba(66, 66, 66, 0.7)
 }
+
 button {
-  background-color: rgba(36,62,125, 0.95);
+  background-color: rgba(36, 62, 125, 0.95);
   color: white;
   border-radius: 10px;
   padding: 5px
 }
 
 button.edit {
-  background-color: rgba(252, 186,3);
+  background-color: rgba(252, 186, 3);
   margin: 3px;
 }
 
@@ -123,7 +147,6 @@ button.delete {
   margin: 3px;
 }
 
-
 .form-label {
   color: rgba(252, 186, 3);
 }
@@ -131,6 +154,7 @@ button.delete {
 #form-edit-field {
   color: red;
 }
+
 .raidGroup {
   margin-top: 5px;
 }

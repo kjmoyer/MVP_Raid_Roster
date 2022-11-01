@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import { Modal, Button, Form } from 'react-bootstrap';
 import server from '../serverRequests.js';
 
 
 
-function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, removeFromCurrent }) {
+function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, removeFromCurrent, cookies }) {
 
   let [showModal, setShowModal] = useState(false);
   let [specs, setSpecs] = useState([])
@@ -40,8 +41,9 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
     let formName = formElements[0].value;
     let formClass = formElements[1].value;
     let formSpec = formElements[2].value;
-    let formSecondarySpec = formElements[3].value
+    let formSecondarySpec = formElements[3].value;
     let guildie = formElements[4].checked ? false : true;
+    let guildid = cookies.guildid;
 
     if (!char) {
       server.post('/char',
@@ -50,7 +52,8 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
           class: formClass,
           specid: formSpec,
           secondarySpecid: formSecondarySpec,
-          guildmember: guildie
+          guildmember: guildie,
+          guildid: guildid
         }
       )
         .then(() => {

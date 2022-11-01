@@ -5,7 +5,7 @@ import NewChar from './NewChar.jsx';
 import ConfirmDelete from './ConfirmDelete.jsx';
 import CharsList from './CharsList.jsx';
 
-function PickCharacter({ updateChars, current }) {
+function PickCharacter({ updateChars, current, cookies, signIn }) {
   let [guildChars, setGuildChars] = useState([]);
   let [nonGuildChars, setNonGuildChars] = useState([]);
   let [currentChars, setCurrentChars] = useState({});
@@ -18,23 +18,33 @@ function PickCharacter({ updateChars, current }) {
 
 
   useEffect(() => {
-    server.get('/chars', { guildMember: true })
+    if (cookies.guildid === undefined || cookies.guildid === 'undefined') {
+      setGuildChars([]);
+    } else {
+
+      server.get('/chars', { guildMember: true, guildid: cookies.guildid })
       .then(({ data }) => {
         setGuildChars(data);
       })
       .catch((err) => {
         console.log(err);
       })
-  }, [])
+    }
+  }, [cookies])
 
   useEffect(() => {
-    server.get('/chars', { guildMember: false })
+    if (cookies.guildid === undefined || cookies.guildid === 'undefined') {
+      setNonGuildChars([]);
+    } else {
+
+      server.get('/chars', { guildMember: false })
       .then((data) => {
         setNonGuildChars(data.data);
       })
       .catch((err) => {
         console.log(err);
       })
+    }
   }, [])
 
   useEffect(() => {
@@ -47,6 +57,10 @@ function PickCharacter({ updateChars, current }) {
   let toggleNewChar = (e) => {
     if (e) {
       e.preventDefault();
+    }
+    if (cookies.guildid === undefined) {
+      signIn();
+      return;
     }
     let newBool = !showNewChar;
     setShowNewChar(newBool);
@@ -155,7 +169,9 @@ function PickCharacter({ updateChars, current }) {
         addNewCharToList={addNewCharToList}
         removeFromCurrent={removeFromCurrent}
         editChar={editChar}
-        listName={listName}>
+        listName={listName}
+        cookies={cookies}
+        >
       </NewChar>
       <ConfirmDelete
         show={showConfirmDelete}

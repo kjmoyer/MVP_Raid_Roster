@@ -44,7 +44,7 @@ function BuffItem({ icon, buff, buffType }) {
           flexDirection: 'row',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          fontSize: '11px'
+          fontSize: '15px'
         }}>
           <img style={{ height: '20px', width: '20px' }} src={icon} />
           <div>{buff.effect}</div>

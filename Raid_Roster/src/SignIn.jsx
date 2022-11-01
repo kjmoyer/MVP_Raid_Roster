@@ -33,7 +33,7 @@ function SignIn({ show, toggle, setCookies }) {
     if (entryType === 'login') {
       server.get('/guild', info)
         .then(({ data }) => {
-          setCookies(data);
+          setCookies('guildid', data);
           toggle();
         })
         .catch((err) => {
@@ -42,7 +42,7 @@ function SignIn({ show, toggle, setCookies }) {
     } else {
       server.post('/guild', info)
         .then(({ data }) => {
-          setCookies(data);
+          setCookies('guildid', data);
           toggle();
         })
         .catch((err) => {

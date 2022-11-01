@@ -13,7 +13,7 @@ function App() {
   const [currentBuffs, setCurrentBuffs] = useState([]);
   const [currentDebuffs, setCurrentDebuffs] = useState([]);
   const [showSignIn, setShowSignIn] = useState(false);
-  const [cookies, setCookies] = useCookies(['user']);
+  const [cookies, setCookies, removeCookie] = useCookies(['guildid']);
 
 
   useEffect(() => {
@@ -62,17 +62,37 @@ function App() {
     setShowSignIn(!showSignIn);
   }
 
+  const signout = (e) => {
+    e.preventDefault();
+    removeCookie('guildid');
+  }
+
 
   return (
     <div className="App">
-      <SignIn show={showSignIn} toggle={toggleSignIn} setCookies={setCookies}/>
-      <h5 className='sign_in' onClick={toggleSignIn}>
-        Sign In
-      </h5>
-      <Container fluid>
+      <SignIn show={showSignIn}
+        toggle={toggleSignIn}
+        setCookies={setCookies} />
+      <Container fluid='true'>
+        <Row className='nav'>
+          <Col fluid xs={10}>
+          <h3 className='nav_header'>WRATH OF THE LICH KING RAID PLANNER</h3>
+          <h4 className='nav_header'>Register your guild or sign in to start planning!</h4>
+          </Col>
+          <Col fluid>
+            <h5 className='sign_in' onClick={cookies.guildid === undefined || cookies.guildid === 'undefined' ? toggleSignIn : signout}>
+              {cookies.guildid === undefined || cookies.guildid === 'undefined' ? 'Sign In' : 'Sign Out'}
+            </h5>
+          </Col>
+        </Row>
+      </Container>
+      <Container fluid='true' className='top_row'>
         <Row >
           <Col>
-            <PickCharacter updateChars={updateChars} current={currentChars} />
+            <PickCharacter updateChars={updateChars}
+              current={currentChars}
+              cookies={cookies}
+              signIn={toggleSignIn} />
           </Col>
           <Col>
             <div style={{
