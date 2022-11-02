@@ -149,10 +149,12 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
       specicon: char.secondarySpecIcon,
       buffs: char.secondaryBuffs,
       debuffs: char.secondaryDebuffs,
+      raidstats: char.secondaryRaidStats,
       secondarySpecName: char.specname,
       secondarySpecIcon: char.specicon,
       secondaryBuffs: char.buffs,
-      secondaryDebuffs: char.debuffs
+      secondaryDebuffs: char.debuffs,
+      secondaryRaidStats: char.raidstats,
     }
     newChars[index] = newChar;
     list === 'Guild Members' ?

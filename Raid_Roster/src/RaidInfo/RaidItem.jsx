@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 function RaidItem({ chars, stat }) {
+  const ref = useRef();
 
   return (
-    <div>
+    <div ref={ref}>
       <OverlayTrigger
         trigger={['focus', 'hover']}
-        palcement='bottom'
+        placement='bottom'
+        container={ref}
         overlay={
           <Tooltip id='statTT'>
             <div><strong>Raiders</strong></div>

@@ -51,9 +51,17 @@ function SignIn({ show, toggle, setCookies }) {
     }
   }
 
+  const toggleAndClose = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    setLoginError('none');
+    toggle();
+  }
+
 
   return (
-    <Modal show={show} onHide={toggle}>
+    <Modal show={show} onHide={toggleAndClose}>
       <Modal.Header closeButton>
         <Modal.Title className='header'>{entryType === 'login' ? 'Sign Into Your Guild' : 'Register Your Guild'}</Modal.Title>
         <br></br>
@@ -71,9 +79,9 @@ function SignIn({ show, toggle, setCookies }) {
       <Modal.Footer>
       <h6 className='toggle_sign_in' onClick={toggleEntry}>{entryType === 'login' ? 'Click to Register a New Guild' : 'Click to Sign Into an Existing Guild'}</h6>
           <Button variant='primary' type='submit' name='submit' onClick={submit}>Submit</Button>
-          <Button variant='secondary' type='button' name='close' onClick={toggle}>Close</Button>
+          <Button variant='secondary' type='button' name='close' onClick={toggleAndClose}>Close</Button>
           <br></br>
-          <Alert variant='danger' style={{display: loginError}}>Please Try Again</Alert>
+          <Alert variant='danger' style={{display: loginError}}>Guild and Password Do Not Match</Alert>
       </Modal.Footer>
     </Modal>
   )

@@ -60,6 +60,7 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
           return server.get('/char', { name: formName })
         })
         .then(({ data }) => {
+          console.log(data[0]);
           addNewCharToList(data[0]);
           toggleNewChar();
         })

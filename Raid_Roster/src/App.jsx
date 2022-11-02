@@ -16,17 +16,20 @@ function App() {
   const [showSignIn, setShowSignIn] = useState(false);
   const [cookies, setCookies, removeCookie] = useCookies(['guildid']);
   const [raidStats, setRaidStats] = useState({
-    tanks: ['Endaron'],
-    healers: ['Grompler'],
-    ranged: ['Marzgirl'],
-    melee: ['Aquashazam'],
-    interrupts: ['Deadassassin']
+    tanks: [],
+    healers: [],
+    ranged: [],
+    melee: [],
+    interrupts: [],
+    battle_rezs: [],
+    crowd_control: [],
   })
 
 
   useEffect(() => {
     let newBuffs = [...currentBuffs];
     let newDebuffs = [...currentDebuffs];
+    let newRaidStats = {...raidStats}
     for (let char in currentChars) {
       currentChars[char].buffs.forEach((buff) => {
         if (currentBuffs.indexOf(buff) === -1) {
@@ -38,8 +41,48 @@ function App() {
           newDebuffs.push(debuff)
         }
       })
+      currentChars[char].raidstats.forEach((stat) => {
+        switch (stat) {
+          case 1 :
+            if (newRaidStats.tanks.indexOf(char) === -1) {
+              newRaidStats.tanks.push(char)
+            };
+            break;
+          case 2 :
+            if (newRaidStats.healers.indexOf(char) === -1) {
+              newRaidStats.healers.push(char)
+            };
+            break;
+          case 3 :
+            if (newRaidStats.ranged.indexOf(char) === -1) {
+              newRaidStats.ranged.push(char)
+            };
+            break;
+          case 4 :
+            if (newRaidStats.melee.indexOf(char) === -1) {
+              newRaidStats.melee.push(char)
+            };
+            break;
+          case 5 :
+            if (newRaidStats.interrupts.indexOf(char) === -1) {
+              newRaidStats.interrupts.push(char)
+            };
+            break;
+          case 6 :
+            if (newRaidStats.battle_rezs.indexOf(char) === -1) {
+              newRaidStats.battle_rezs.push(char)
+            };
+            break;
+          case 7 :
+            if (newRaidStats.crowd_control.indexOf(char) === -1) {
+              newRaidStats.crowd_control.push(char)
+            };
+            break;
+        }
+      })
       setCurrentBuffs(newBuffs);
       setCurrentDebuffs(newDebuffs);
+      setRaidStats(newRaidStats);
     }
   }, [currentChars])
 
@@ -59,7 +102,15 @@ function App() {
     delete newChars[char]
     setCurrentBuffs([]);
     setCurrentDebuffs([]);
-    console.log(newChars);
+    setRaidStats({
+      tanks: [],
+      healers: [],
+      ranged: [],
+      melee: [],
+      interrupts: [],
+      battle_rezs: [],
+      crowd_control: [],
+    });
     setCurrentChars(newChars);
   }
 
@@ -73,6 +124,18 @@ function App() {
   const signout = (e) => {
     e.preventDefault();
     removeCookie('guildid');
+    setCurrentChars({});
+    setCurrentBuffs([]);
+    setCurrentDebuffs([]);
+    setRaidStats({
+      tanks: [],
+      healers: [],
+      ranged: [],
+      melee: [],
+      interrupts: [],
+      battle_rezs: [],
+      crowd_control: [],
+    });
   }
 
 
