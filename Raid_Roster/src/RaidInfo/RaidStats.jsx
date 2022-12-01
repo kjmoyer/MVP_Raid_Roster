@@ -7,7 +7,7 @@ function RaidStats({raidStats}) {
   return (
     <div style={{ width: '33%'}}>
       <h1 className='header'>Raid Stats</h1>
-      <ListGroup>
+      <ListGroup className='stats'>
         <ListGroup.Item as='li'>
           <RaidItem chars={raidStats.tanks} stat='Tanks'/>
           <RaidItem chars={raidStats.healers} stat='Healers'/>

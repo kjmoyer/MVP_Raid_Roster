@@ -23,12 +23,12 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
     } else {
 
       server.get('/chars', { guildMember: true, guildid: cookies.guildid })
-      .then(({ data }) => {
-        setGuildChars(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then(({ data }) => {
+          setGuildChars(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
   }, [cookies])
 
@@ -38,12 +38,12 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
     } else {
 
       server.get('/chars', { guildMember: false })
-      .then((data) => {
-        setNonGuildChars(data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then((data) => {
+          setNonGuildChars(data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
   }, [])
 
@@ -173,7 +173,7 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
         editChar={editChar}
         listName={listName}
         cookies={cookies}
-        >
+      >
       </NewChar>
       <ConfirmDelete
         show={showConfirmDelete}
@@ -182,10 +182,14 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
         deleteChar={deleteChar}>
       </ConfirmDelete>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <h1 className={'header'}>{listName}</h1>
-        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <button onClick={toggleList}>Swap List</button>
-          <button onClick={toggleNewChar}>Add New Char</button>
+        <div style={{ display: 'flex', justifyContent: 'center'}}>
+          <h1 className={'header'}>{listName}</h1>
+          <button className={'swapButton'} onClick={toggleList}>Swap List</button>
+        </div>
+        <div className='modifyChar'>
+          <button className='addNew' onClick={toggleNewChar}>Add New Char</button>
+          <button className='edit' onClick={toggleEditChar}>Edit Char</button>
+          <button className='delete' onClick={confirmDelete}>Delete Char</button>
         </div>
         <div className={'header_row'}>
           <div style={{ width: '10px' }}>Icon</div>
@@ -195,10 +199,6 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
           <div style={{ width: '50px', marginRight: '10px' }}>Toggle Offspec</div>
         </div>
         <CharsList charsList={listName === 'Guild Members' ? guildChars : nonGuildChars} current={currentChars} active={active} list={listName} markActive={markActive} toggleOS={toggleOS}></CharsList>
-        <div className='modifyChar'>
-          <button className='edit' onClick={toggleEditChar}>Edit Char</button>
-          <button className='delete' onClick={confirmDelete}>Delete Char</button>
-        </div>
         <button onClick={addToRoster}>Add to Raid Roster</button>
       </div>
     </div>
