@@ -61,7 +61,7 @@ function SignIn({ show, toggle, setCookies }) {
 
 
   return (
-    <Modal show={show} onHide={toggleAndClose}>
+    <Modal className='modal' show={show} onHide={toggleAndClose}>
       <Modal.Header closeButton>
         <Modal.Title className='header'>{entryType === 'login' ? 'Sign Into Your Guild' : 'Register Your Guild'}</Modal.Title>
         <br></br>

@@ -71,6 +71,11 @@ div {
   height: 10%;
 }
 
+.modal {
+  max-width: 80%;
+  justify-content: center;
+}
+
 .nav_header {
   color: rgba(252, 186, 3);
   font-weight: bold;
@@ -200,5 +205,5 @@ button.delete {
 }
 
 .modal {
-  margin: 80px;
+  margin: 80px 10vw 0 10vw;
 }
