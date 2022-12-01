@@ -57,10 +57,9 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
         }
       )
         .then(() => {
-          return server.get('/char', { name: formName })
+          return server.get('/char', { name: formName, guildid: guildid})
         })
         .then(({ data }) => {
-          console.log(data[0]);
           addNewCharToList(data[0]);
           toggleNewChar();
         })
@@ -74,11 +73,12 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
           class: formClass,
           specid: formSpec,
           secondarySpecid: formSecondarySpec,
-          guildmember: guildie
+          guildmember: guildie,
+          guildid: cookies.guildid
         }
       )
         .then(() => {
-          return server.get('/char', { name: formName });
+          return server.get('/char', { name: formName, guildid: cookies.guildid });
         })
         .then(({ data }) => {
           removeFromCurrent(data[0]);

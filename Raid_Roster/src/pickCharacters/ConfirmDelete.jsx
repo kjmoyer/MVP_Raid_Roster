@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
-import server from '../serverRequests.js';
 
 function ConfirmDelete({ show, toggle, active, deleteChar }) {
   let [showModal, setShowModal] = useState(false);

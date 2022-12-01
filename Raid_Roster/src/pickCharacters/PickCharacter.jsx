@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import server from '../serverRequests.js';
 import NewChar from './NewChar.jsx';
 import ConfirmDelete from './ConfirmDelete.jsx';
 import CharsList from './CharsList.jsx';
+import PickCharHeader from './PickCharHeader.jsx';
 
 function PickCharacter({ updateChars, current, cookies, signIn }) {
   let [guildChars, setGuildChars] = useState([]);
@@ -15,6 +16,7 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
   let [active, setActive] = useState({});
   let [editChar, setEditChar] = useState(undefined);
   let [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  let [sorted, setSorted] = useState('');
 
 
   useEffect(() => {
@@ -37,7 +39,7 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
       setNonGuildChars([]);
     } else {
 
-      server.get('/chars', { guildMember: false })
+      server.get('/chars', { guildMember: false, guildid: cookies.guildid })
         .then((data) => {
           setNonGuildChars(data.data);
         })
@@ -107,11 +109,9 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
   let deleteChar = (e) => {
     e.preventDefault();
     let thisChar = { ...active };
-    server.delete('/char', thisChar.name)
+    server.delete('/char', { name: thisChar.name, guildid: cookies.guildid })
       .then(() => {
         confirmDelete();
-      })
-      .then(() => {
         removeFromCurrent(thisChar)
       })
   }
@@ -163,6 +163,40 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
     markActive(newChar);
   }
 
+  let sortChars = (text) => {
+    let chars = listName === 'Guild Members' ? [...guildChars] : [...nonGuildChars];
+    if (sorted !== text) {
+      chars.sort((a, b) => {
+        let aString = a[text].toLowerCase();
+        let bString = b[text].toLowerCase();
+        if (aString < bString) {
+          return -1
+        } else {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      chars.sort((a, b) => {
+        let aString = a[text].toLowerCase();
+        let bString = b[text].toLowerCase();
+        if (aString > bString) {
+          return -1
+        } else {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    let newSort = sorted === text ? '' : text;
+    if (listName === 'Guild Members') {
+      setGuildChars(chars)
+    } else {
+      setNonGuildChars(chars)
+    }
+    setSorted(newSort)
+  }
+
   return (
     <div>
       <NewChar
@@ -182,7 +216,7 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
         deleteChar={deleteChar}>
       </ConfirmDelete>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', justifyContent: 'center'}}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <h1 className={'header'}>{listName}</h1>
           <button className={'swapButton'} onClick={toggleList}>Swap List</button>
         </div>
@@ -192,11 +226,12 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
           <button className='delete' onClick={confirmDelete}>Delete Char</button>
         </div>
         <div className={'header_row'}>
-          <div style={{ width: '10px' }}>Icon</div>
-          <div style={{ width: '100px' }}>Name</div>
-          <div tyle={{ width: '90px' }}>Spec</div>
-          <div tyle={{ width: '90px' }}>Class</div>
-          <div style={{ width: '50px', marginRight: '10px' }}>Toggle Offspec</div>
+          {[{ text: 'Name', width: '20%', sortVal: 'name' }, { text: 'Spec', width: '30%', sortVal: 'specname' }, { text: 'Class', width: '20%', sortVal: 'class' }, { text: 'Toggle Offspec', width: '30%', sortVal: 'secondarySpecName' }].map((header) => {
+            return (
+              <PickCharHeader key={header.text} text={header.text} width={header.width} sortVal={header.sortVal} sortChars={sortChars}></PickCharHeader>
+            )
+          })}
+
         </div>
         <CharsList charsList={listName === 'Guild Members' ? guildChars : nonGuildChars} current={currentChars} active={active} list={listName} markActive={markActive} toggleOS={toggleOS}></CharsList>
         <button onClick={addToRoster}>Add to Raid Roster</button>

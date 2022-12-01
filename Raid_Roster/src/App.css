@@ -131,10 +131,18 @@ h4.nav_header {
   color: white;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   margin: 5px;
-  border-radius: '5px'
+  border-radius: '5px';
+  padding: 0 20px
+
+}
+
+.charHeader:hover {
+  font-weight: bold;
+  color: rgba(252, 186, 3);
+  cursor: pointer;
 }
 
 .modifyChar {
@@ -202,6 +210,12 @@ button.delete {
 .OSimg:hover {
   background-color: rgba(252, 186, 3);
   padding: 3px;
+}
+
+.specBox {
+  display: flex;
+  flex-direction: flex-start;
+  align-items: center;
 }
 
 .modal {

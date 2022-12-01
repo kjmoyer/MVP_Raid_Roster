@@ -37,32 +37,36 @@ function CharsList({ charsList, current, list, markActive, active, toggleOS }) {
             return
           }
           let isActive = (activeChar.name === char.name ? 'active' : null);
-          return <ListGroup.Item as='div' style={{
+          return<ListGroup.Item as='div' style={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent:'space-around',
+            justifyContent: 'space-evenly',
             alignItems: 'center',
           }}
             className='character_row'
             key={char.name} identifier={index} onClick={select} active={isActive}>
-            <div indentifier={index}style={{ width: '50px'}}>
+            <div indentifier={index} className='specBox' style={{ width: '20%' }} >
+              {char.name}
+            </div>
+            <div identifier={index} className='specBox' style={{ width: '30%' }} identifier={index}>
               <img identifier={index} style={{
                 height: '35px',
                 width: '35px',
+                marginRight: '8px'
               }}
                 src={char.specicon}></img>
-            </div>
-            <div style={{ width: '100px' }} identifier={index}>
-              {char.name}
-            </div>
-            <div style={{ width: '90px' }} identifier={index}>
               {char.specname}
             </div>
-            <div style={{ width: '90px' }} identifier={index}>
+            <div identifier={index} className='specBox' style={{ width: '20%' }} >
               {char.class}
             </div>
-            <div indentifier={index}style={{width: '50px'}}>
-              <img className='OSimg' identifier={-1} src={char.secondarySpecIcon}  onClick={e => {toggleOS(e, index, list, char)}}></img>
+            <div indentifier={index} className='specBox OSimg'  style={{ width: '30%' }} onClick={e => {toggleOS(e, index, list, char)}}>
+              <img identifier={-1} style={{
+                height: '35px',
+                width: '35px',
+                marginRight: '8px'
+              }} src={char.secondarySpecIcon}></img>
+              {char.secondarySpecName}
             </div>
           </ListGroup.Item>
         })}

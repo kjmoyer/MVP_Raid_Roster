@@ -143,7 +143,8 @@ function App() {
     <div className="App">
       <SignIn show={showSignIn}
         toggle={toggleSignIn}
-        setCookies={setCookies} />
+        setCookies={setCookies}
+        cookie={cookies} />
       <Container fluid='true'>
         <Row className='nav'>
           <Col fluid='true' xs={10}>
