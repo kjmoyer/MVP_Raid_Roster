@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
+import GuildInput from './GuildInput.jsx';
 import server from './serverRequests.js';
 
 
@@ -67,21 +68,21 @@ function SignIn({ show, toggle, setCookies }) {
         <br></br>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={(e) => {submit(e)}}>
+        <Form onSubmit={(e) => { submit(e) }}>
           <Form.Group className='mb-3'>
             <Form.Label>Guild Name</Form.Label>
-            <Form.Control type='text' placeholder='Your Guild' />
+            <GuildInput entryType={entryType}/>
             <Form.Label>Password</Form.Label>
             <Form.Control type='password' />
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-      <h6 className='toggle_sign_in' onClick={toggleEntry}>{entryType === 'login' ? 'Click to Register a New Guild' : 'Click to Sign Into an Existing Guild'}</h6>
-          <Button variant='primary' type='submit' name='submit' onClick={submit}>Submit</Button>
-          <Button variant='secondary' type='button' name='close' onClick={toggleAndClose}>Close</Button>
-          <br></br>
-          <Alert variant='danger' style={{display: loginError}}>Guild and Password Do Not Match</Alert>
+        <h6 className='toggle_sign_in' onClick={toggleEntry}>{entryType === 'login' ? 'Click to Register a New Guild' : 'Click to Sign Into an Existing Guild'}</h6>
+        <Button variant='primary' type='submit' name='submit' onClick={submit}>Submit</Button>
+        <Button variant='secondary' type='button' name='close' onClick={toggleAndClose}>Close</Button>
+        <br></br>
+        <Alert variant='danger' style={{ display: loginError }}>Guild and Password Do Not Match</Alert>
       </Modal.Footer>
     </Modal>
   )

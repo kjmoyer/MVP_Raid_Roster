@@ -125,7 +125,6 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
       var updateFunction = setNonGuildChars
     }
     let addToList = newChar.guildmember === true ? 'Guild Members' : 'Non-Guild Members';
-    // let updatedChars = listName === 'Guild Members' ? [...guildChars] : [...nonGuildChars];
     const index = updatedChars.indexOf(oldChar);
     if (listName === addToList) {
       updatedChars.splice(index, 1, newChar);
@@ -135,17 +134,6 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
       updateFunction(updatedChars)
       addNewCharToList(newChar)
     }
-    // if (listName === 'Guild Members') {
-    //   setGuildChars(updatedChars)
-    //     .then(() => {
-    //       addNewCharToList(newChar)
-    //       toggleNewChar()
-    //     })
-    // } else {
-      // await setNonGuildChars(updatedChars);
-      // addNewCharToList(newChar)
-      // toggleNewChar()
-    // }
     toggleNewChar();
   }
 

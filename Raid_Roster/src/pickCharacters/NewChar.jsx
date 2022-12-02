@@ -82,8 +82,6 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
         })
         .then(({ data }) => {
           removeFromCurrent(char, data[0]);
-          // addNewCharToList(data[0]);
-          // toggleNewChar();
         })
         .catch((err) => {
           console.log(err);
