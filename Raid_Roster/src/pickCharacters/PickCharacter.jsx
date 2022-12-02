@@ -116,24 +116,46 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
       })
   }
 
-  let removeFromCurrent = (thisChar) => {
-    let updateChars = thisChar.guildmember ? guildChars : nonGuildChars;
-    const index = updateChars.indexOf(thisChar);
-    updateChars.splice(index, 1);
-    if (thisChar.guildmember) {
-      setGuildChars(updateChars);
+  let removeFromCurrent = (oldChar, newChar) => {
+    if (listName === 'Guild Members') {
+      var updatedChars = [...guildChars]
+      var updateFunction = setGuildChars;
     } else {
-      setNonGuildChars(updateChars);
+      var updatedChars = [...nonGuildChars]
+      var updateFunction = setNonGuildChars
     }
+    let addToList = newChar.guildmember === true ? 'Guild Members' : 'Non-Guild Members';
+    // let updatedChars = listName === 'Guild Members' ? [...guildChars] : [...nonGuildChars];
+    const index = updatedChars.indexOf(oldChar);
+    if (listName === addToList) {
+      updatedChars.splice(index, 1, newChar);
+      updateFunction(updatedChars)
+    } else {
+      updatedChars.splice(index, 1);
+      updateFunction(updatedChars)
+      addNewCharToList(newChar)
+    }
+    // if (listName === 'Guild Members') {
+    //   setGuildChars(updatedChars)
+    //     .then(() => {
+    //       addNewCharToList(newChar)
+    //       toggleNewChar()
+    //     })
+    // } else {
+      // await setNonGuildChars(updatedChars);
+      // addNewCharToList(newChar)
+      // toggleNewChar()
+    // }
+    toggleNewChar();
   }
 
   let addNewCharToList = (char) => {
-    let updateChars = char.guildmember ? guildChars : nonGuildChars;
-    updateChars.push(char);
+    let updatedChars = char.guildmember ? [...guildChars] : [...nonGuildChars];
+    updatedChars.push(char);
     if (char.guildmember) {
-      setGuildChars(updateChars);
+      setGuildChars(updatedChars);
     } else {
-      setNonGuildChars(updateChars);
+      setNonGuildChars(updatedChars);
     }
   }
   let toggleOS = (e, index, list, char) => {

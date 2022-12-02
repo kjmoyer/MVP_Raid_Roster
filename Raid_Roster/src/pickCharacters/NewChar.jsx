@@ -81,9 +81,9 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
           return server.get('/char', { name: formName, guildid: cookies.guildid });
         })
         .then(({ data }) => {
-          removeFromCurrent(data[0]);
-          addNewCharToList(data[0]);
-          toggleNewChar();
+          removeFromCurrent(char, data[0]);
+          // addNewCharToList(data[0]);
+          // toggleNewChar();
         })
         .catch((err) => {
           console.log(err);
