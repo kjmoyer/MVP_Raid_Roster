@@ -17,6 +17,7 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
   let [editChar, setEditChar] = useState(undefined);
   let [showConfirmDelete, setShowConfirmDelete] = useState(false);
   let [sorted, setSorted] = useState('');
+  let [sortOrder, setSortOrder] = useState('forward');
 
 
   useEffect(() => {
@@ -111,7 +112,7 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
     let thisChar = { ...active };
     server.delete('/char', { name: thisChar.name, guildid: cookies.guildid })
       .then(() => {
-        confirmDelete();
+        confirmDelete(); //already confirmed, this toggles the modal
         removeFromCurrent(thisChar)
       })
   }
@@ -124,22 +125,57 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
       var updatedChars = [...nonGuildChars]
       var updateFunction = setNonGuildChars
     }
-    let addToList = newChar.guildmember === true ? 'Guild Members' : 'Non-Guild Members';
-    const index = updatedChars.indexOf(oldChar);
-    if (listName === addToList) {
-      updatedChars.splice(index, 1, newChar);
-      updateFunction(updatedChars)
-    } else {
+    const index = updatedChars.map((char) => {
+      return char.name
+    }).indexOf(oldChar.name);
+    if (!newChar) {
       updatedChars.splice(index, 1);
-      updateFunction(updatedChars)
-      addNewCharToList(newChar)
+      updateFunction(updatedChars);
+    } else {
+      let addToList = newChar.guildmember === true ? 'Guild Members' : 'Non-Guild Members';
+      if (listName === addToList) {
+        updatedChars.splice(index, 1, newChar);
+        updateFunction(updatedChars)
+      } else {
+        updatedChars.splice(index, 1);
+        updateFunction(updatedChars)
+        addNewCharToList(newChar)
+      }
+      toggleNewChar();
     }
-    toggleNewChar();
   }
 
   let addNewCharToList = (char) => {
     let updatedChars = char.guildmember ? [...guildChars] : [...nonGuildChars];
-    updatedChars.push(char);
+    let sortBy = sorted === '' ? 'name' : sorted;
+    //if the list is sorted 'forward' i.e. a-z
+    if (sortOrder === 'forward') {
+      if (char[sortBy] < updatedChars[0][sortBy]) {
+        updatedChars.unshift(char);
+      } else if (char[sortBy] > updatedChars[updatedChars.length - 1][sortBy]) {
+        updatedChars.push(char)
+      } else {
+        for (let i = 1; i < updatedChars.length; i++) {
+          if (char[sortBy] >= updatedChars[i - 1][sortBy] && char[sortBy] <= updatedChars[i][sortBy]) {
+            updatedChars.splice(i, 0, char);
+            break;
+          }
+        }
+      }
+    } else /*if the sort order is backward i.e. z-a*/ {
+      if (char[sortBy] > updatedChars[0][sortBy]) {
+        updatedChars.unshift(char);
+      } else if (char[sortBy] < updatedChars[updatedChars.length - 1][sortBy]) {
+        updatedChars.push(char)
+      } else {
+        for (let i = 1; i < updatedChars.length; i++) {
+          if (char[sortBy] <= updatedChars[i - 1][sortBy] && char[sortBy] >= updatedChars[i][sortBy]) {
+            updatedChars.splice(i - 1, 0, char);
+            break;
+          }
+        }
+      }
+    }
     if (char.guildmember) {
       setGuildChars(updatedChars);
     } else {
@@ -186,6 +222,7 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
         }
         return 0;
       });
+      setSortOrder('forward')
     } else {
       chars.sort((a, b) => {
         let aString = a[text].toLowerCase();
@@ -197,6 +234,7 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
         }
         return 0;
       });
+      setSortOrder('backward')
     }
     let newSort = sorted === text ? '' : text;
     if (listName === 'Guild Members') {

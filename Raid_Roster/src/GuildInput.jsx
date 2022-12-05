@@ -14,35 +14,26 @@ function GuildInput({ entryType }) {
         .catch((err) => {
           console.log(err)
         })
-      }
-      getGuilds();
-    }, [])
+    }
+    getGuilds();
+  }, [])
 
-if (entryType === 'register') {
-  return (
-    (
-      <Form.Control type='input' placeholder='Your Guild' />
+  if (entryType === 'register') {
+    return (
+      (
+        <Form.Control type='input' placeholder='Your Guild' />
+      )
     )
-  )
-} else {
-  // server.get('/guilds')
-  //     .then(({ data }) => {
-  //       var allGuilds = data;
-  // let guildOptions =
-  return (
-    <Form.Select type='select' placeholder='Your Guild'>
-      <option>Select Guild</option>
-      {allGuilds.map((guild) =>
-        (<option key={guild.guildname}>{guild.guildname}</option>)
-      )}
-    </Form.Select>
-  )
-  // })
-  // .catch((err) => {
-  //   console.log(err)
-  //   return (<div>ERROR!</div>)
-  // })
-}
+  } else {
+    return (
+      <Form.Select type='select' placeholder='Your Guild'>
+        <option>Select Guild</option>
+        {allGuilds.map((guild) =>
+          (<option key={guild.guildname}>{guild.guildname}</option>)
+        )}
+      </Form.Select>
+    )
+  }
 }
 
 export default GuildInput;
