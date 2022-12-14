@@ -5,7 +5,7 @@ import server from '../serverRequests.js';
 
 
 
-function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, removeFromCurrent, cookies }) {
+function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, removeFromCurrent, setActive, setEditChar, cookies }) {
 
   let [showModal, setShowModal] = useState(false);
   let [specs, setSpecs] = useState([])
@@ -61,6 +61,7 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
         })
         .then(({ data }) => {
           addNewCharToList(data[0]);
+          setActive(data[0]);
           toggleNewChar();
         })
         .catch((err) => {
@@ -82,6 +83,8 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
         })
         .then(({ data }) => {
           removeFromCurrent(char, data[0]);
+          setActive(data[0])
+          setEditChar(undefined);
         })
         .catch((err) => {
           console.log(err);
@@ -101,7 +104,7 @@ function NewChar({ show, toggleNewChar, addNewCharToList, editChar, listName, re
   return (
     <Modal className='modal' show={showModal} onHide={clearAndToggle}>
       <Modal.Header closeButton>
-        <Modal.Title className='header'>Add New Character</Modal.Title>
+        <Modal.Title className='header'>{editChar ? 'Update Character' : 'Add New Character'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={(e) => { submitChar(e) }}>

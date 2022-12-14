@@ -3,6 +3,7 @@ import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import server from '../serverRequests.js';
 import NewChar from './NewChar.jsx';
 import ConfirmDelete from './ConfirmDelete.jsx';
+import NoSelection from './NoSelection.jsx';
 import CharsList from './CharsList.jsx';
 import PickCharHeader from './PickCharHeader.jsx';
 
@@ -12,6 +13,7 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
   let [currentChars, setCurrentChars] = useState({});
   let [charsList, setCharsList] = useState(guildChars);
   let [showNewChar, setShowNewChar] = useState(false);
+  let [noCharSelected, setNoCharSelected] = useState(false);
   let [listName, setListName] = useState('Guild Members');
   let [active, setActive] = useState({});
   let [editChar, setEditChar] = useState(undefined);
@@ -56,6 +58,14 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
     }
   }, [current])
 
+  useEffect(() => {
+    if (listName === 'Guild Members') {
+      setCharsList(guildChars)
+    } else {
+      setCharsList(nonGuildChars)
+    }
+  }, [listName, guildChars, nonGuildChars])
+
 
   let toggleNewChar = (e) => {
     if (e) {
@@ -73,10 +83,13 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
     if (e) {
       e.preventDefault();
     }
-    let newBool = !showNewChar;
-    setEditChar(editChar ? undefined : active);
-    setActive({});
-    setShowNewChar(newBool);
+    if (Object.keys(active).length === 0) {
+      setNoCharSelected(noCharSelected ? false : true)
+    } else {
+      let newBool = !showNewChar;
+      setEditChar(editChar ? undefined : active);
+      setShowNewChar(newBool);
+    }
   }
 
   let toggleList = (e) => {
@@ -97,14 +110,29 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
   let addToRoster = (e) => {
     e.preventDefault();
     updateChars(active);
+    const getNextChar = (char) => {
+      const nextIndex = charsList.indexOf(char) + 1 //selects the next index on current list.
+      if (nextIndex >= charsList.length) {
+        markActive({});
+      } else if (current[charsList[nextIndex].name]) { //if the next char on the list is already in raid
+        getNextChar(charsList[nextIndex]);
+      } else {
+        markActive(charsList[nextIndex])
+      }
+    }
+    getNextChar(active);
   }
 
   let confirmDelete = (e) => {
     if (e) {
       e.preventDefault();
     }
+    if (Object.keys(active).length === 0) {
+      setNoCharSelected(noCharSelected ? false : true)
+    } else {
     let newBool = !showConfirmDelete;
     setShowConfirmDelete(newBool);
+    }
   }
 
   let deleteChar = (e) => {
@@ -252,7 +280,9 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
         toggleNewChar={editChar ? toggleEditChar : toggleNewChar}
         addNewCharToList={addNewCharToList}
         removeFromCurrent={removeFromCurrent}
+        setActive={setActive}
         editChar={editChar}
+        setEditChar={setEditChar}
         listName={listName}
         cookies={cookies}
       >
@@ -263,6 +293,10 @@ function PickCharacter({ updateChars, current, cookies, signIn }) {
         active={active}
         deleteChar={deleteChar}>
       </ConfirmDelete>
+      <NoSelection
+        show={noCharSelected}
+        toggle={toggleEditChar}>
+      </NoSelection>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <h1 className={'header'}>{listName}</h1>
