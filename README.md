@@ -7,9 +7,11 @@ This raid roster application for World of Warcraft: Wrath of the Lich King allow
 ```diff
 -Navigation:
 ```
-Add New Character Button: brings up a modal form to enter new character information to be added to the database and character lists.
+Sign In Button: Allows a user to create a new guild, or sign in to an existing guild profile. The server uses a Bcrypt hashing function to provide password security. Upon signing, in existing characters for the guild will be displayed.
 
 Swap List: Swaps the currently shown list between 'Guild Members' and 'Non-Guild Members'.
+
+Add New Char/ Edit Char/ Delete Char Buttons: Modify the list of characters stored for the given guild. A character must be selected to use the edit/delete buttons else an error prompt will be displayed
 
 Toggle Off Spec icons: toggle the current character between their main class spec and off spec.
 
@@ -23,20 +25,9 @@ Buffs/Debuffs columns: displays current buffs / debuffs provided to the raid bas
 
 Hover single buff/debuff: A tooltip displays which classes provide the highlighted buff or debuff to make filling missing values easy.
 
+Raid Stats: Displays data on key raid comp metrics such as number of tanks/healers/interrupts etc.
 
-```diff
--Planned improvements:
-```
-Optimize for mobile by making sure that the buffs/debuffs do not overlap the raid roster components when the screen size is reduced.
+Hover Raid stats: Displays which character names fulfill these roles.
 
-Edit/Delete Char buttons: edit information or delete character altogether from a list/database.
-
-Implement user credentials and authentication to allow multiple views with specific guild and non-guild lists.
-
-Add other cooldowns by the buff/debuff section with count (such as innervate, and BattleRez).
-
-Add a component listing the # of tanks, healers, ranged DPS, and melee dps chars in Raid.
-
-Update tooltip for active buffs: changes from what classes could provide this to what chars are currently providing this.
 
 ![Alt Text](https://media.giphy.com/media/p7Hgtn7wdo3EKb53xx/giphy.gif)
